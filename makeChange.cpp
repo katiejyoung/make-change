@@ -40,6 +40,7 @@ int main() {
 int readLines(string dataFile) {
     string fileLine;
     int len;
+    int lineNum = 1;
     vector<int> valueVector;
 
     ifstream inputFile(dataFile.c_str()); // Open passed file
@@ -52,10 +53,16 @@ int readLines(string dataFile) {
             // Convert line to vector containing c, k and n (respectively)
             lineToArray(valueVector, fileLine, 3);
 
-            // Find quantity values for each denomination
-            makeChange(valueVector[0], valueVector[1], valueVector[2]);
+            if ((valueVector[0] <= 1) || (valueVector[1] < 1)) {
+                cout << "Error on line " << lineNum << ": c or k value not valid" << endl;
+            }
+            else {
+                // Find quantity values for each denomination
+                makeChange(valueVector[0], valueVector[1], valueVector[2]);
+            }
 
             valueVector.clear(); // Clear vector elements
+            lineNum++;
         }
 
         inputFile.close(); // Close ifstream
