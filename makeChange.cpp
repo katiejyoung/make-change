@@ -53,8 +53,8 @@ int readLines(string dataFile) {
             // Convert line to vector containing c, k and n (respectively)
             lineToArray(valueVector, fileLine, 3);
 
-            if ((valueVector[0] <= 1) || (valueVector[1] < 1)) {
-                cout << "Error on line " << lineNum << ": c or k value not valid" << endl;
+            if ((valueVector[0] <= 1) || (valueVector[1] < 1) || (valueVector[2] < 1)) {
+                cout << "Error on line " << lineNum << ": c or k value not valid or n < 1" << endl;
             }
             else {
                 // Find quantity values for each denomination
