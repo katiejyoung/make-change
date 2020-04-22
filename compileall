@@ -1,0 +1,3 @@
+#!/bin/bash
+# Compile original implementation
+g++ -o makeChange makeChange.cpp
