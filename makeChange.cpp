@@ -46,19 +46,17 @@ int readLines(string dataFile) {
 
     // If open successful, read lines
     if (inputFile.is_open()) {
-        getline(inputFile, fileLine);
-        
-        valueVector.resize(3);
+        while(getline(inputFile, fileLine)) { // Iterate through file lines
+            valueVector.resize(3);
 
-        // Convert line to vector containing c, k and n (respectively)
-        lineToArray(valueVector, fileLine, 3);
+            // Convert line to vector containing c, k and n (respectively)
+            lineToArray(valueVector, fileLine, 3);
 
-        makeChange(valueVector[0], valueVector[1], valueVector[2]);
+            // Find quantity values for each denomination
+            makeChange(valueVector[0], valueVector[1], valueVector[2]);
 
-            // // Sort vector
-            // insertSort(valueVector, len);
-
-        valueVector.clear(); // Clear vector elements
+            valueVector.clear(); // Clear vector elements
+        }
 
         inputFile.close(); // Close ifstream
         return 1; // Return 1 if successful
@@ -95,6 +93,7 @@ void lineToArray(vector<int> &vect, string dataString, int length) {
     }
 }
 
+// Finds quantity values for each denomination of range: c^0 to c^k
 void makeChange(int c, int k, int n) {
     vector<int> denominations;
     vector<int> quantity;
@@ -137,7 +136,7 @@ void writeToFile(vector<int> &denom, vector<int> &quant, int c, int k, int n) {
             outputFile << "Denomination: " << denom[i] << " Quantity: " << quant[i] << endl;
         }
     }
-    outputFile << endl;
-    
+    outputFile << "--------------------------------" << endl;
+
     outputFile.close(); // Close ofstream
 }
