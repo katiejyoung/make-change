@@ -16,6 +16,7 @@ int readLines(string dataFile);
 void lineToArray(vector<int> &vect, string dataString, int length);
 void makeChange(int c, int k, int n);
 void calcDenominations(vector<int> &denom, int c, int k);
+void writeToFile(vector<int> &denom, vector<int> &quant, int c, int k, int n);
 
 int main() {
     int removeFile = remove("change.txt"); // Delete output file in case program has already been run
@@ -96,16 +97,47 @@ void lineToArray(vector<int> &vect, string dataString, int length) {
 
 void makeChange(int c, int k, int n) {
     vector<int> denominations;
+    vector<int> quantity;
     denominations.resize(k + 1);
+    quantity.resize(k + 1);
     calcDenominations(denominations, c, k);
+    int q;
+    int remainingChange = n;
+    int changeVal = k;
 
-    for (int i = 0; i <= k; i++) {
-        cout << denominations[i] << " ";
+    while (changeVal >= 0) {
+        q = 0; // Reset quantity value
+        while ((remainingChange - denominations[changeVal]) >= 0) {
+            remainingChange -= denominations[changeVal];
+            q++;
+        }
+
+        quantity[changeVal] = q;
+        changeVal--;
     }
+
+    writeToFile(denominations, quantity, c, k, n);
 }
 
 void calcDenominations(vector<int> &denom, int c, int k) {
     for (int i = 0; i <= k; i++) {
         denom[i] = pow(c, i);
     }
+}
+
+void writeToFile(vector<int> &denom, vector<int> &quant, int c, int k, int n) {
+    ofstream outputFile("change.txt", ios_base::app); // Open ofstream and enable overwriting
+    outputFile << "Data input: c = " << c << ", k = " << k << ", n = " << n << endl;
+
+    for (int i = k; i >= 0; i--) {
+        if (quant[i] == 0) {
+            outputFile << "Denomination: " << denom[i] << " Quantity: none" << endl;
+        }
+        else {
+            outputFile << "Denomination: " << denom[i] << " Quantity: " << quant[i] << endl;
+        }
+    }
+    outputFile << endl;
+    
+    outputFile.close(); // Close ofstream
 }
