@@ -8,11 +8,14 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
 int readLines(string dataFile);
 void lineToArray(vector<int> &vect, string dataString, int length);
+void makeChange(int c, int k, int n);
+void calcDenominations(vector<int> &denom, int c, int k);
 
 int main() {
     int removeFile = remove("change.txt"); // Delete output file in case program has already been run
@@ -35,7 +38,7 @@ int main() {
 // Returns 0 if file error
 int readLines(string dataFile) {
     string fileLine;
-    int len, c, k, n;
+    int len;
     vector<int> valueVector;
 
     ifstream inputFile(dataFile.c_str()); // Open passed file
@@ -48,11 +51,8 @@ int readLines(string dataFile) {
 
         // Convert line to vector containing c, k and n (respectively)
         lineToArray(valueVector, fileLine, 3);
-        c = valueVector[0];
-        k = valueVector[1];
-        n = valueVector[2];
 
-        cout << "c: " << c << " k: " << k << " n: " << n << endl;
+        makeChange(valueVector[0], valueVector[1], valueVector[2]);
 
             // // Sort vector
             // insertSort(valueVector, len);
@@ -91,5 +91,21 @@ void lineToArray(vector<int> &vect, string dataString, int length) {
         }
 
         dataItr++;
+    }
+}
+
+void makeChange(int c, int k, int n) {
+    vector<int> denominations;
+    denominations.resize(k + 1);
+    calcDenominations(denominations, c, k);
+
+    for (int i = 0; i <= k; i++) {
+        cout << denominations[i] << " ";
+    }
+}
+
+void calcDenominations(vector<int> &denom, int c, int k) {
+    for (int i = 0; i <= k; i++) {
+        denom[i] = pow(c, i);
     }
 }
