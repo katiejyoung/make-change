@@ -53,6 +53,7 @@ int readLines(string dataFile) {
             // Convert line to vector containing c, k and n (respectively)
             lineToArray(valueVector, fileLine, 3);
 
+            // Validate c, k and n validity for algorithm
             if ((valueVector[0] <= 1) || (valueVector[1] < 1) || (valueVector[2] < 1)) {
                 cout << "Error on line " << lineNum << ": c or k value not valid or n < 1" << endl;
             }
@@ -86,7 +87,9 @@ void lineToArray(vector<int> &vect, string dataString, int length) {
         // When separator identified, convert value to integer and append to vector
         if ((dataItr == dataString.length()) || (dataString[dataItr] == ' ') && (dataString[dataItr + 1] != ' ')) {
             dataValue = atoi(dataItem.c_str()); // Convert value to integer
-            vect[vectorItr] = dataValue;
+
+            // Add value to data array and increment vector iterator
+            vect[vectorItr] = dataValue; 
             vectorItr++;
             
             dataValue = 0;
@@ -104,33 +107,43 @@ void lineToArray(vector<int> &vect, string dataString, int length) {
 void makeChange(int c, int k, int n) {
     vector<int> denominations;
     vector<int> quantity;
-    denominations.resize(k + 1);
-    quantity.resize(k + 1);
-    calcDenominations(denominations, c, k);
     int q;
     int remainingChange = n;
     int changeVal = k;
 
+    denominations.resize(k + 1);
+    quantity.resize(k + 1);
+
+    // Fill denominations array with exponent calculations
+    calcDenominations(denominations, c, k);
+
+    // Iterate through each denomination value, starting with the largest
     while (changeVal >= 0) {
         q = 0; // Reset quantity value
+
+        // Subtract largest remaining denomination value until it can no longer be used
         while ((remainingChange - denominations[changeVal]) >= 0) {
-            remainingChange -= denominations[changeVal];
-            q++;
+            remainingChange -= denominations[changeVal]; // Subtract value
+            q++; // Increment quantity count
         }
 
+        // Set quantity array at denomination value index to quantity count
         quantity[changeVal] = q;
-        changeVal--;
+        changeVal--; // Decrement denomination value
     }
 
-    writeToFile(denominations, quantity, c, k, n);
+    writeToFile(denominations, quantity, c, k, n); // Output findings
 }
 
+// Calculates denominations for range: c^0 to c^k
+// Saves calculations to passed vector
 void calcDenominations(vector<int> &denom, int c, int k) {
     for (int i = 0; i <= k; i++) {
         denom[i] = pow(c, i);
     }
 }
 
+// Writes passed data to "change.txt"
 void writeToFile(vector<int> &denom, vector<int> &quant, int c, int k, int n) {
     ofstream outputFile("change.txt", ios_base::app); // Open ofstream and enable overwriting
     outputFile << "Data input: c = " << c << ", k = " << k << ", n = " << n << endl;
