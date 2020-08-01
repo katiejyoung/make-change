@@ -24,4 +24,4 @@ which means the solution contains one coin of denomination 64, none of 16, two c
 3. To run the program, type "makeChange"
 
 Example run using included data.txt file:
-![Alt Image makeChange](/makechange.png?raw=true)
+![Alt Image makeChange](/makechange.PNG?raw=true)
