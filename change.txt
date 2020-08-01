@@ -9,8 +9,13 @@ Denomination: 9 Quantity: 1
 Denomination: 3 Quantity: 2
 Denomination: 1 Quantity: none
 --------------------------------
-Data input: c = 3, k = 2, n = 16
-Denomination: 9 Quantity: 1
-Denomination: 3 Quantity: 2
+Data input: c = 4, k = 2, n = 15
+Denomination: 16 Quantity: none
+Denomination: 4 Quantity: 3
+Denomination: 1 Quantity: 3
+--------------------------------
+Data input: c = 3, k = 2, n = 73
+Denomination: 9 Quantity: 8
+Denomination: 3 Quantity: none
 Denomination: 1 Quantity: 1
 --------------------------------
