@@ -18,3 +18,6 @@ which means the solution contains one coin of denomination 64, none of 16, two c
 1. Give yourself permission to the compiler using: "chmod 777 compileall".
 2. Run "compileall" to compile the code.
 3. To run the program, type "makeChange"
+
+Example run using included data.txt file:
+![Alt Image SecretKeeper](/images/makechange.png?raw=true)
